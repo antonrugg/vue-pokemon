@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/d067956802.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+    integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+    crossorigin="anonymous"></script>
+  <title>Recap Struttura Dati - Squadra Pokemon</title>
+</head>
+
+<body>
+  <div id="app" class="container">
+    <!-- contenitore sx -->
+    <div class="left">
+      <div v-if="myTeam.length > 0" class="team">
+        <div v-for="(pokemon, index) in myTeam" :class="(index === activePokemon) ? 'pokemon active' : 'pokemon'"
+        @click="setActivePokemon(index)">
+          <div class="pokemon-info">
+            <h3>
+              <span class="pokemon-name" >{{pokemon.nome}}</span>
+            </h3>
+          </div>
+          <div class="match-icon f-right">
+            <span @click.stop="deletePokemon(index)">Libera</span>
+          </div>
+        </div>
+      </div>
+      <div v-else class="team">
+        <div class="no-pokemon">
+            <h3>
+              <span class="pokemon-name" >Nessun Pokemon in squadra</span>
+            </h3>
+        </div>
+      </div>
+      <div class="button-section">
+        <button
+          @click="addRandomPokemon()"
+        >Cattura nuovo Pokemon</button>
+      </div>
+    </div>
+    <!-- /contenitore sx -->
+    <!-- contenitore dx -->
+    <div v-if="activePokemon !== null" class="right">
+      <div class="header-right">
+        <div class="pokemon-title">
+          <h3>{{myTeam[activePokemon].nome}}</h3>
+          <i :class="['fa-solid', sessoPokemon(myTeam[activePokemon].sesso)]"></i>
+        </div>
+      </div>
+      <div class="right-infos">
+        <div class="panel-body">
+          <div class="categories">
+            <div class="category">
+              <span>Lv.</span>
+              <span>{{myTeam[activePokemon].lv}}</span>
+            </div>
+            <div class="category">
+              <span>Punti Vita</span>
+              <span :class="classPuntiVita(myTeam[activePokemon].pv)">{{myTeam[activePokemon].pv}}%</span>
+            </div>
+            <div class="category">
+              <span>Tipo</span>
+              <div>
+                <img v-for="tipo in myTeam[activePokemon].tipi" :src="imgURLTipo(tipo)"/>
+              </div>
+            </div>
+          </div>
+          <div class="info">
+            <div class="main-image">
+              <img :src="imgURLPokemon(myTeam[activePokemon].nome)"/>
+            </div>
+            <div class="description">{{myTeam[activePokemon].descrizione}}</div>
+          </div>
+          <div class="mosse-container">
+            <h3>Mosse</h3>
+            <div class="mosse">
+              <div v-for="m in 4" class="mossa">
+                <span v-if="myTeam[activePokemon].mosse[m-1]">
+                  {{myTeam[activePokemon].mosse[m-1]}}
+                </span>
+                <span v-else>---</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div v-else class="not-selected">
+      <h3>Selezionare un Pokemon per vedere le statistiche</h3>
+    </div>
+    <!-- /contenitore dx -->
+  </div>
+
+  <script src="main.js"></script>
+</body>
+
+</html>
