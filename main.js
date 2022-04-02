@@ -81,53 +81,64 @@ const mieiPokemon = [
     },
 ]
 
-// const app = new Vue({
-//     el: '#app',
-//     data: {
-//         myTeam: mieiPokemon,
-//         activePokemon: null,
-//     },
-//     methods: {
-//         setActivePokemon: function(i){
-//             this.activePokemon = i;
-//         },
-//         deletePokemon: function(i){
-//             this.myTeam.splice(i, 1);
-//             this.setActivePokemon(null);
-//         },
-//         classPuntiVita: function(pv){
-//             if(pv < 25){
-//                 return 'red';
-//             }else if(pv < 50){
-//                 return 'orange';
-//             }else{
-//                 return 'green';
-//             }
-//         },
-//         sessoPokemon: function(sex){
-//             if(sex === 'M'){
-//                 return 'fa-mars';
-//             }else if(sex === 'F'){
-//                 return 'fa-venus';
-//             }
-//         },
-//         imgURLPokemon: function(nome){
-//             return `img/pokemon/${nome}.png`;
-//         },
-//         imgURLTipo: function(nome){
-//             return `img/tipi/${nome}.webp`;
-//         },
-//         randomNumberBetween: function(min, max){
-//             return Math.floor(Math.random() * (max - min + 1) + min)
-//         },
-//         addRandomPokemon: function(){
-//             const targetIndex = this.randomNumberBetween(0, mieiPokemon.length-1);
-//             const target = {...mieiPokemon[targetIndex]};
-//             const sex = this.randomNumberBetween(0,1);
-//             target.sesso = sex == 0? 'M' : 'F';
-//             target.lv = this.randomNumberBetween(5,100);
-//             target.pv = this.randomNumberBetween(1,100);
-//             this.myTeam.push(target);
-//         }
-//     }
-// });
+
+
+const app = new Vue({
+    el: '#app',
+    data: {
+        myTeam: mieiPokemon,
+        activePokemon: null,
+    },
+    methods: {
+        setActivePokemon: function (index) {
+            this.activePokemon = index;
+        },
+
+        sessoPokemon: function (s) {
+            if (s === 'M') {
+                return 'fa-mars'
+            } else if(s === 'F'){
+                return 'fa-venus'
+            }
+        },
+
+        classPuntiVita: function (pv) {
+            if (pv < 25) {
+                return 'red'
+            } else if (pv < 50) {
+                return 'orange'
+            } else {
+                return 'green'
+            }
+        },
+
+        imgURLTipo: function (tipo) {
+            return `img/tipi/${tipo}.webp`;
+        },
+
+        imgURLPokemon: function (nome) {
+            return `img/pokemon/${nome.toLowerCase()}.png`;
+        },
+
+        randomNumberBetween: function (min, max) {
+            return Math.floor(Math.random() * (max - min + 1) + min)
+        },
+        
+        addRandomPokemon: function(){
+            const targetIndex = this.randomNumberBetween(0, mieiPokemon.length-1);
+            const target = {...mieiPokemon[targetIndex]};
+            const sex = this.randomNumberBetween(0,1);
+            target.sesso = sex == 0? 'M' : 'F';
+            target.lv = this.randomNumberBetween(5,100);
+            target.pv = this.randomNumberBetween(1,100);
+            this.myTeam.push(target);
+        },
+
+        deletePokemon: function (i) {
+            this.myTeam.splice(i, 1);
+            this.setActivePokemon(null);
+        },
+       
+    }
+
+});
